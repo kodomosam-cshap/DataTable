@@ -1,0 +1,42 @@
+private void ButtonEditarOS_Click(object sender, EventArgs e)
+{
+	Dal da = new Dal();
+
+	MySqlDataReader reader = da.verificaOSAtiva(txtIDOS.Text);
+
+	reader.Read();
+
+	string strIDOS = reader["IDOS"].ToString();
+
+	if (!strIDOS.Equals("")){
+
+		if (!txtIDOS.Text.Equals(""))
+		{
+			dataGridViewEditarOS.DataSource = da.selecionarItensEditarOS(txtIDOS.Text);
+			//dataGridViewEditarOS.AutoResizeColumns();
+			//dataGridViewEditarOS.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+			foreach (DataGridViewColumn column in dataGridViewEditarOS.Columns)
+			{
+				if (column.DataPropertyName == "QTD")
+					column.Width = 50; 
+				if (column.DataPropertyName == "ITEM")
+					column.Width = 525; 
+				if (column.DataPropertyName == "VALOR")
+					column.Width = 90; 
+
+				//column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+			}
+		}
+		else
+		{
+			MessageBox.Show("Informe uma Ordem de Serviço");
+		}
+		
+	}
+	else
+	{
+		MessageBox.Show("Não é possivel editar uma OS inativa");
+	}
+	
+}

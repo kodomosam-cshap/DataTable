@@ -1,0 +1,29 @@
+public DataTable selecionarItensEditarOS(string IDOS)
+{
+
+	try
+	{
+		conexao = new MySqlConnection(connectionString);
+
+		conexao.Open();
+
+		string STRSELECT = "SELECT QTD, ITEM, VALOR FROM TBITENS WHERE IDOS = '" + IDOS + "'";
+
+		MySqlCommand command = new MySqlCommand(STRSELECT, conexao);
+
+		MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+
+		DataTable data = new DataTable();
+		adapter.Fill(data);
+
+		command.ExecuteNonQuery();
+
+		return data;
+	}
+	catch (Exception ex)
+	{
+
+		throw new Exception("error ao selecionar item para editar OS: " + ex.Message);
+	}
+
+}
